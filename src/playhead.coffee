@@ -2,7 +2,7 @@
     constructor: (@parent, tempo, @icon) ->
         @playing = false
         @time = 0
-        @shape = two.makeLine(@time, 0, @time, params.height)
+        @shape = two.makeLine(@time, 0, @time, piano_roll.height)
         @shape.stroke = 'red'
         @set_speed(tempo)
 
