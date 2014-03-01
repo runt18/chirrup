@@ -88,7 +88,7 @@ $ ->
                 return
 
         start = Math.floor(screen.x / size.width)
-        pitch = Math.floor(screen.y / size.height)
+        pitch = grid.height - Math.floor(screen.y / size.height)
 
         if start >= 0
             note = new Note(pitch, start)
