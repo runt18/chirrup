@@ -15,18 +15,20 @@ $ ->
     class App
         constructor: ->
             @notes = []
-            @playhead = new Playhead(this, icon)
             @sharps = [1, 3, 6, 8, 10]
             @pitches = null
             @tempo = 128
             @preview = false
-
             @noteIdx = 0
 
+            @playhead = new Playhead(this, @tempo, icon)
             fields.tempo.val(@tempo)
 
             $.getJSON 'data/pitches.json', (data) =>
                 @pitches = data
+
+        set_tempo: (@tempo) ->
+            @playhead.set_speed(@tempo)
 
         remove_note: (note) ->
             note.remove()
@@ -118,6 +120,7 @@ $ ->
         ch.preview = !ch.preview
         return false
 
-    fields.tempo.on 'change', (e) -> ch.tempo = parseFloat(fields.tempo.val())
+    fields.tempo.on 'change', (e) ->
+        ch.set_tempo(parseFloat(fields.tempo.val()))
 
     two.update()

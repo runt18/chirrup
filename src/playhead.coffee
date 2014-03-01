@@ -1,10 +1,14 @@
  class Playhead
-    constructor: (@parent, @icon) ->
+    constructor: (@parent, tempo, @icon) ->
         @playing = false
         @time = 0
-        @speed = 0.02
         @shape = two.makeLine(@time, 0, @time, params.height)
         @shape.stroke = 'red'
+        @set_speed(tempo)
+
+    set_speed: (tempo) ->
+        # App runs at 60 FPS. Convert BPM to BPF by dividing by 60 * 60.
+        @speed = tempo / 3600
 
     toggle: ->
         @playing = !@playing
