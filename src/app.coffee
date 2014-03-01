@@ -36,6 +36,15 @@ class App
         o = main.offset()
         pos.subtract(o.left + border.left, o.top + border.top)
 
+    canvas_to_grid: (pos) ->
+        new Vector(
+            Math.floor(pos.x / size.width),
+            Math.floor(pos.y / size.height)
+        )
+
+    screen_to_grid: (pos) ->
+        @canvas_to_grid(@screen_to_canvas(pos))
+
     debug_click: (pos) ->
         pos = @screen_to_canvas(pos)
         if @debug
@@ -43,10 +52,9 @@ class App
             c.fill = 'green'
 
     add_note: (pos) ->
-        screen = @screen_to_canvas(pos)
-
-        start = Math.floor(screen.x / size.width)
-        pitch = grid.height - Math.floor(screen.y / size.height)
+        pos = @screen_to_grid(pos)
+        start = pos.x
+        pitch = grid.height - pos.y
 
         if start >= 0
             note = new Note(pitch, start)
@@ -55,6 +63,10 @@ class App
             if @preview
                 note = new Note(pitch, start, false)
                 note.play()
+
+    move_selected: (pos) ->
+        pos = @screen_to_grid(pos)
+        @selected.shape.translation.set((pos.x + 0.5) * size.width, (pos.y + 0.5) * size.height)
 
     clear: ->
         console.log @notes
@@ -83,7 +95,7 @@ class App
     note_at: (v) ->
         v = @screen_to_canvas(v)
         for note in @notes
-            console.log "Checking (#{v.x}, #{v.y}) against (#{note.rect.x}, #{note.rect.y})"
+            # console.log "Checking (#{v.x}, #{v.y}) against (#{note.rect.x}, #{note.rect.y})"
             if note.rect.intersects(v)
                 return note
 

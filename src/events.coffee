@@ -41,7 +41,7 @@ bind_events = ->
                     ch.add_note(pos)
                 when Mode.MOVE
                     if ch.selected?
-                        ch.selected.shape.translation.set(pos.x, pos.y)
+                        ch.move_selected(pos)
 
     body.on 'keydown', (e) ->
         switch e.keyCode
