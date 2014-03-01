@@ -1,7 +1,14 @@
  class Note
         constructor: (@pitch=0, @start=0, @render=true, @duration=1, @velocity=100) ->
+            @border = 6
+
             if @render
-                @rect = new Rect((@start + 0.5) * size.width, (grid.height - @pitch + 0.5) * size.height)
+                @rect = new Rect(
+                    (@start + 0.5) * size.width,
+                    (grid.height - @pitch + 0.5) * size.height,
+                    size.width - @border,
+                    size.height - @border
+                )
                 @shape = two.makeRectangle(@rect.x, @rect.y, @rect.width, @rect.height)
                 @shape.fill = 'red'
                 @shape.noStroke()
