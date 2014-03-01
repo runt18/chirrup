@@ -30,10 +30,12 @@ bind_events = ->
         console.log ch.notes
 
     body.on 'keydown', (e) ->
-        console.log e
         switch e.keyCode
+            # Spacebar toggles playback
             when 32 then ch.playhead.toggle()
+            # A plays a note
             when 65 then ch.notes[0].play()
+            # TODO add musical typing
 
     buttons.play.on 'click', (e) ->
         ch.play()
@@ -51,3 +53,6 @@ bind_events = ->
 
     fields.tempo.on 'change', (e) ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
+
+    fields.mode.on 'change', (e) ->
+        console.log fields.mode.val()

@@ -8,7 +8,7 @@ $ ->
     buttons[bid] = $('#' + bid) for bid in bids
 
     # Grab fields
-    fids = ['tempo']
+    fids = ['tempo', 'mode']
     fields[fid] = $('#' + fid) for fid in fids
 
     # TODO: refactor this
