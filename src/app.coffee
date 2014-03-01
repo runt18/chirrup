@@ -31,6 +31,9 @@ class App
         $.getJSON 'data/pitches.json', (data) =>
             @pitches = data
 
+        if @preview
+            fields.preview.addClass('btn-primary')
+
     set_tempo: (@tempo) ->
         @playhead.set_speed(@tempo)
 
