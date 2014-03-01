@@ -22,11 +22,13 @@ $ ->
     init = ->
         # Draw horizontal lines
         for y in [0..grid.height]
-            line = two.makeLine(0, y * size.height, params.width, y * size.height)
+            yy = y * size.height
+            two.makeLine(0, yy, params.width, yy)
 
         # Draw vertical lines
-        for x in [0..params.width] by size.width
-            line = two.makeLine(x, 0, x, params.height)
+        for x in [0..grid.width]
+            xx = x * size.width
+            two.makeLine(xx, 0, xx, params.height)
 
         # Draw piano
         for y in [grid.height..0] by -1
