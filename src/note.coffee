@@ -5,7 +5,7 @@
             if @render
                 @rect = new Rect(
                     @start * size.width,
-                    (grid.height - @pitch) * size.height,
+                    (grid.height - @pitch - 1) * size.height,
                     size.width - @border,
                     size.height - @border
                 )
