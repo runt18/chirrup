@@ -19,6 +19,12 @@ class Playhead
         # App runs at 60 FPS. Convert BPM to BPF by dividing by 60 * 60.
         @speed = tempo / 3600
 
+    set_time: (@time) ->
+        @update_shape()
+
+    update_shape: ->
+        @shape.translation.x = @time * size.width
+
     toggle: ->
         @playing = !@playing
         icon = buttons.play.find('i')
@@ -37,7 +43,7 @@ class Playhead
             next.play()
             @parent.advance()
 
-        @shape.translation.x = @time * size.width
+        @update_shape()
 
         @time += @speed
 

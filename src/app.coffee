@@ -73,7 +73,7 @@ class App
             note = new Note(pitch, start)
             @notes.push(note)
         else if pos.x >= 0 and pos.y < 0
-            console.log('top')
+            @playhead.set_time(pos.x)
         else if pos.x < 0 and pos.y >= 0
             if @preview
                 note = new Note(pitch, start, false)
