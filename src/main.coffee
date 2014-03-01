@@ -1,18 +1,26 @@
 # Make an instance of two and place it on the page.
-elem = $("#main")[0]
-params =
-  width: 800
-  height: 600
+main = $('#main')
+body = $('body')
 
 grid =
     width: 16
     height: 24
 
-two = new Two(params).appendTo(elem)
+border =
+    left: 50
+    right: 0
+    top: 0
+    bottom: 0
+
+params =
+  width: 800 + border.left + border.right
+  height: 600 + border.top + border.bottom
 
 size =
     width: params.width / grid.width
     height: params.height / grid.height
+
+two = new Two(params).appendTo(main[0])
 
 # two has convenience methods to create shapes.
 # circle = two.makeCircle(72, 100, 50)
@@ -43,8 +51,6 @@ two.bind('update', (frameCount) ->
 # rect.opacity = 0.75
 # rect.noStroke()
 
-main = $('#main')
-
 main.on 'mousedown', (e) ->
     o = main.offset()
 
@@ -56,16 +62,21 @@ main.on 'mousedown', (e) ->
     rect.fill = 'red'
     rect.noStroke()
 
+togglePlay = ->
+    playing = !playing
+    icon.toggleClass('glyphicon-play')
+    icon.toggleClass('glyphicon-pause')
+
+body.on 'keydown', (e) ->
+    togglePlay() if e.keyCode is 32
+
 buttons =
     play: $("#play")
     reset: $("#reset")
 
 icon = buttons.play.find('i')
 
-buttons.play.on 'click', (e) ->
-    playing = !playing
-    icon.toggleClass('glyphicon-play')
-    icon.toggleClass('glyphicon-pause')
+buttons.play.on 'click', (e) -> togglePlay()
 
 buttons.reset.on 'click', (e) ->
     playhead.translation.x = 0
