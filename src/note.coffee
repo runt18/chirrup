@@ -10,8 +10,8 @@
                     size.height - @border
                 )
                 @shape = two.makeRectangle(@rect.x + size.width / 2, @rect.y + size.height / 2, @rect.width, @rect.height)
-                @shape.fill = 'red'
-                @shape.noStroke()
+                @shape.fill = '#EC0013'
+                @shape.stroke = '#333'
                 @played = false
 
                 @update_freq()
