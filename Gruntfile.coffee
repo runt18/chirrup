@@ -1,3 +1,6 @@
+names = ['intro', 'app', 'events', 'geom', 'note', 'playhead', 'main']
+paths = ("src/#{name}.coffee" for name in names)
+
 module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
@@ -77,15 +80,7 @@ module.exports = (grunt) ->
         options:
           join: true
         files:
-          'js/main.js': [
-            'src/intro.coffee'
-            'src/app.coffee'
-            'src/events.coffee'
-            'src/geom.coffee'
-            'src/note.coffee'
-            'src/playhead.coffee'
-            'src/main.coffee'
-          ]
+          'js/main.js': paths
 
   grunt.loadNpmTasks('grunt-contrib-stylus')
   grunt.loadNpmTasks('grunt-contrib-watch')
