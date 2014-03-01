@@ -73,18 +73,16 @@ module.exports = (grunt) ->
         ext: '.css'
 
     coffee:
-      glob_to_multiple:
-        expand: true
-        flatten: true
-        cwd: 'src'
-        src: ['*.coffee']
-        dest: 'js'
-        ext: '.js'
+      compile:
+        options:
+          join: true
+        files:
+          'js/main.js': ['src/intro.coffee', 'src/playhead.coffee', 'src/main.coffee']
 
   # These plugins provide necessary tasks.
-  # grunt.loadNpmTasks('grunt-contrib-concat')
   # grunt.loadNpmTasks('grunt-contrib-uglify')
   # grunt.loadNpmTasks('grunt-contrib-qunit')
+  grunt.loadNpmTasks('grunt-contrib-concat')
   grunt.loadNpmTasks('grunt-contrib-stylus')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-coffee')

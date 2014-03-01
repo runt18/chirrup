@@ -9,23 +9,7 @@ $ ->
     fields =
         tempo: $('#tempo')
 
-    grid =
-        width: 16
-        height: 24
-
-    border =
-        left: 50
-        right: 0
-        top: 0
-        bottom: 0
-
-    params =
-      width: 800 + border.left + border.right
-      height: 600 + border.top + border.bottom
-
-    size =
-        width: params.width / grid.width
-        height: params.height / grid.height
+    icon = buttons.play.find('i')
 
     class Note
         constructor: (@pitch=0, @start=0, @duration=1, @velocity=100) ->
@@ -47,34 +31,10 @@ $ ->
         intersects: (v) ->
             (@x < v.x < @x + @width) and (@y < v.y < @y + @height)
 
-    class Playhead
-        constructor: ->
-            @playing = false
-            @time = 0
-            @speed = 0.02
-            @shape = two.makeLine(@time, 0, @time, params.height)
-            @shape.stroke = 'red'
-
-        toggle: ->
-            @playing = !@playing
-            icon.toggleClass('glyphicon-play')
-            icon.toggleClass('glyphicon-pause')
-
-        progress: ->
-            if @time >= grid.width
-                @time = 0
-
-            @shape.translation.x = @time * size.width
-
-            @time += @speed if @playing
-
-        reset: ->
-            @time = 0
-
     class App
         constructor: ->
             @notes = []
-            @playhead = new Playhead()
+            @playhead = new Playhead(two, icon)
             @sharps = [1, 3, 6, 8, 10]
             @pitches = null
             @tempo = 128
@@ -83,7 +43,6 @@ $ ->
 
             $.getJSON 'data/pitches.json', (data) =>
                 @pitches = data
-
 
     two = new Two(params).appendTo(main[0])
     two.scene.translation.set(border.left, border.top)
@@ -138,14 +97,11 @@ $ ->
             when 32 then ch.playhead.toggle()
             when 65 then play_note(200)
 
-    icon = buttons.play.find('i')
-
     buttons.play.on 'click', (e) ->
         ch.playhead.toggle()
         return false
 
     buttons.reset.on 'click', (e) -> ch.playhead.reset()
-
     fields.tempo.on 'change', (e) -> ch.tempo = parseFloat(fields.tempo.val())
 
     two.update()
