@@ -55,4 +55,4 @@ bind_events = ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
 
     fields.mode.on 'change', (e) ->
-        console.log fields.mode.val()
+        cs.set_mode(fields.mode.val())

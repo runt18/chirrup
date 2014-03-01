@@ -1,3 +1,9 @@
+Mode =
+    ADD: 1
+    RESIZE: 2
+    MOVE: 3
+    GROUP: 4
+
 class App
     constructor: ->
         @notes = []
@@ -6,9 +12,11 @@ class App
         @tempo = 128
         @preview = false
         @noteIdx = 0
+        @mode = Mode.ADD
 
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
+
 
         # TODO: could be a race condition here. Maybe make Async, shouldn't be
         # too slow
@@ -42,3 +50,6 @@ class App
 
     reset: ->
         @noteIdx = 0
+
+    set_mode: (str) ->
+        @mode = Mode[str.toUpperCase()]
