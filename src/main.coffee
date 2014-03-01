@@ -1,3 +1,16 @@
+class TextLayer
+    constructor: ->
+        @cvs = $('<canvas>')[0]
+        @cvs.width = canvas.width
+        @cvs.height = canvas.height
+        @ctx = @cvs.getContext('2d')
+
+    write: (s, x, y) ->
+        @ctx.fillText(s, x, y)
+
+    appendTo: (el) ->
+        $(@cvs).appendTo(el)
+
 $ ->
     # Grab main page elements
     main = $('#main')
@@ -11,10 +24,11 @@ $ ->
     fids = ['tempo', 'mode']
     fields[fid] = $('#' + fid) for fid in fids
 
-    # TODO: refactor this
-    icon = buttons.play.find('i')
-
     $('#controls button').tooltip()
+
+    tl = new TextLayer()
+    tl.appendTo(main)
+    tl.write('Hello', 10, 10)
 
     two.appendTo(main[0])
     two.scene.translation.set(border.left, border.top)

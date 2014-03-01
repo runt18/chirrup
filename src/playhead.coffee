@@ -1,5 +1,5 @@
  class Playhead
-    constructor: (@parent, tempo, @icon) ->
+    constructor: (@parent, tempo) ->
         @playing = false
         @time = 0
         @shape = two.makeLine(@time, 0, @time, piano_roll.height)
@@ -12,8 +12,9 @@
 
     toggle: ->
         @playing = !@playing
-        @icon.toggleClass('glyphicon-play')
-        @icon.toggleClass('glyphicon-pause')
+        icon = buttons.play.find('i')
+        icon.toggleClass('glyphicon-play')
+        icon.toggleClass('glyphicon-pause')
 
     progress: ->
         return unless @playing
