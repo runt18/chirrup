@@ -73,10 +73,15 @@ for y in [0..grid.height]
     line = two.makeLine(0, y * size.height, params.width, y * size.height)
 
 sharps = [1, 3, 6, 8, 10]
-T("sin", {freq:300, mul:0.5}).play()
+
+play_note = (freq) ->
+    sine = T('sin', {freq:freq, mul:0.5})
+    T('perc', {r:500}, sine).on('ended', -> this.pause()).bang().play()
+
+pitches = null
 
 $.getJSON 'data/pitches.json', (data) ->
-    console.log data
+    pitches = data
 
 note = 0
 for y in [grid.height..0] by -1
@@ -114,7 +119,10 @@ main.on 'mousedown', (e) ->
     console.log notes
 
 body.on 'keydown', (e) ->
-    playhead.toggle() if e.keyCode is 32
+    console.log e
+    switch e.keyCode
+        when 32 then playhead.toggle()
+        when 65 then play_note(200)
 
 buttons =
     play: $("#play")
