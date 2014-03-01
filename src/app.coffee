@@ -15,7 +15,7 @@ class App
         @mode = Mode.ADD
         @mousedown = false
         @selected = null
-        @debug = true
+        @debug = false
 
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
@@ -81,7 +81,9 @@ class App
         @mode = Mode[str.toUpperCase()]
 
     note_at: (v) ->
+        v = @screen_to_canvas(v)
         for note in @notes
+            console.log "Checking (#{v.x}, #{v.y}) against (#{note.rect.x}, #{note.rect.y})"
             if note.rect.intersects(v)
                 return note
 

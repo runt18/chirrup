@@ -4,12 +4,12 @@
 
             if @render
                 @rect = new Rect(
-                    (@start + 0.5) * size.width,
-                    (grid.height - @pitch + 0.5) * size.height,
+                    @start * size.width,
+                    (grid.height - @pitch) * size.height,
                     size.width - @border,
                     size.height - @border
                 )
-                @shape = two.makeRectangle(@rect.x, @rect.y, @rect.width, @rect.height)
+                @shape = two.makeRectangle(@rect.x + size.width / 2, @rect.y + size.height / 2, @rect.width, @rect.height)
                 @shape.fill = 'red'
                 @shape.noStroke()
                 @played = false
