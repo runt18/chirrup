@@ -79,6 +79,7 @@ module.exports = (grunt) ->
         files:
           'js/main.js': [
             'src/intro.coffee'
+            'src/events.coffee'
             'src/geom.coffee'
             'src/note.coffee'
             'src/playhead.coffee'

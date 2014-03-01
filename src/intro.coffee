@@ -18,3 +18,5 @@ size =
 
 two = new Two(params)
 ch = null
+main = body = icon = null
+buttons = fields = {}
