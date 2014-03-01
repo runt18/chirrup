@@ -6,6 +6,7 @@ $ ->
         play: $("#play")
         reset: $("#reset")
         preview: $('#preview')
+        clear: $('#clear')
 
     fields =
         tempo: $('#tempo')
@@ -32,7 +33,14 @@ $ ->
 
         remove_note: (note) ->
             note.remove()
-            @notes.splice(notes.indexOf(note), 1)
+            @notes.splice(@notes.indexOf(note), 1)
+
+        clear: ->
+            console.log @notes
+            for note in @notes
+                note.remove()
+
+            @notes = []
 
         play: ->
             @playhead.toggle()
@@ -108,17 +116,17 @@ $ ->
 
     buttons.play.on 'click', (e) ->
         ch.play()
-        return false
 
     buttons.reset.on 'click', (e) ->
         ch.reset()
         ch.playhead.reset()
-        return false
 
     buttons.preview.on 'click', (e) ->
         buttons.preview.toggleClass('btn-primary')
         ch.preview = !ch.preview
-        return false
+
+    buttons.clear.on 'click', (e) ->
+        ch.clear()
 
     fields.tempo.on 'change', (e) ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
