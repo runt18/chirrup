@@ -13,7 +13,7 @@ grid =
 border =
     left: 50
     right: 0
-    top: 20
+    top: 50
     bottom: 0
 
 piano_roll =
