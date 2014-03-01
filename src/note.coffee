@@ -14,8 +14,22 @@
                 @shape.noStroke()
                 @played = false
 
+                @update_freq()
+
+        update_freq: ->
             @freq = ch.pitches[@pitch % NOTES_PER_OCTAVE].freq * (Math.floor(@pitch / NOTES_PER_OCTAVE) + 1)
             @sine = T('sin', {freq: @freq, mul: 0.5})
+
+        set_start: (x) ->
+            @rect.x = x * size.width
+            @shape.translation.x = (x + 0.5) * size.width
+            @start = x
+
+        set_pitch: (x) ->
+            @rect.y = @pitch * size.height
+            @shape.translation.y = (x + 0.5) * size.height
+            @pitch = x
+            @update_freq()
 
         end: -> @start + @duration
 

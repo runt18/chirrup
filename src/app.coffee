@@ -76,7 +76,8 @@ class App
     move_selected: (pos) ->
         return unless @selected?
         pos = @screen_to_grid(pos)
-        @selected.shape.translation.set((pos.x + 0.5) * size.width, (pos.y + 0.5) * size.height)
+        @selected.set_start(pos.x)
+        @selected.set_pitch(pos.y)
 
     clear: ->
         console.log @notes

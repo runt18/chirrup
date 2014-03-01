@@ -19,7 +19,7 @@ bind_events = ->
                 ch.add_note(pos)
             when Mode.MOVE
                 n = ch.note_at(pos)
-                console.log n
+                # console.log n
                 ch.selected = n if n?
 
     main.on 'mouseup', (e) ->
