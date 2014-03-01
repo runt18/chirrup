@@ -3,6 +3,12 @@
 #         note.remove()
 #         return
 
+cursor_map =
+    add: 'pointer'
+    move: 'move'
+    resize: 'ew-resize'
+    group: 'crosshair'
+
 bind_events = ->
     two.bind('update', (frameCount) ->
         ch.playhead.progress()
@@ -10,14 +16,29 @@ bind_events = ->
 
     main.on 'mousedown', (e) ->
         ch.mousedown = true
-        ch.add_note(new Vector(e.pageX, e.pageY))
+        pos = new Vector(e.pageX, e.pageY)
+
+        switch ch.mode
+            when Mode.ADD
+                ch.add_note(pos)
+            when Mode.MOVE
+                n = ch.note_at(pos)
+                ch.selected = n if n?
 
     main.on 'mouseup', (e) ->
         ch.mousedown = false
+        ch.selected = null
 
     main.on 'mousemove', (e) ->
+        pos = new Vector(e.pageX, e.pageY)
+
         if ch.mousedown
-            ch.add_note(new Vector(e.pageX, e.pageY))
+            switch ch.mode
+                when Mode.ADD
+                    ch.add_note(pos)
+                when Mode.MOVE
+                    if ch.selected?
+                        ch.selected.shape.translation.set(pos.x, pos.y)
 
     body.on 'keydown', (e) ->
         switch e.keyCode
@@ -45,4 +66,8 @@ bind_events = ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
 
     fields.mode.on 'change', (e) ->
-        cs.set_mode(fields.mode.val())
+        mode = fields.mode.val()
+        main.css('cursor', cursor_map[mode])
+        ch.set_mode(mode)
+
+    fields.mode.trigger('change')

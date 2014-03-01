@@ -14,10 +14,10 @@ class App
         @noteIdx = 0
         @mode = Mode.ADD
         @mousedown = false
+        @selected = null
 
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
-
 
         # TODO: could be a race condition here. Maybe make Async, shouldn't be
         # too slow
@@ -34,10 +34,7 @@ class App
     add_note: (pos) ->
         o = main.offset()
 
-        screen = new Vector(
-            pos.x - o.left - border.left,
-            pos.y - o.top - border.top
-        )
+        screen = pos.subtract(o.left + border.left, o.top - border.top)
 
         start = Math.floor(screen.x / size.width)
         pitch = grid.height - Math.floor(screen.y / size.height)
@@ -73,3 +70,10 @@ class App
 
     set_mode: (str) ->
         @mode = Mode[str.toUpperCase()]
+
+    note_at: (v) ->
+        for note in @notes
+            if note.rect.intersects(v)
+                return note
+
+        return null
