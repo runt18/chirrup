@@ -1,8 +1,9 @@
 Mode =
     ADD: 1
-    RESIZE: 2
-    MOVE: 3
-    GROUP: 4
+    REMOVE: 2
+    RESIZE: 3
+    MOVE: 4
+    GROUP: 5
 
 class App
     constructor: ->
@@ -19,6 +20,7 @@ class App
 
         @cursor_map =
             add: 'pointer'
+            remove: 'pointer'
             move: 'move'
             resize: 'ew-resize'
             group: 'crosshair'
@@ -38,6 +40,7 @@ class App
         @playhead.set_speed(@tempo)
 
     remove_note: (note) ->
+        return unless note?
         note.remove()
         @notes.splice(@notes.indexOf(note), 1)
 

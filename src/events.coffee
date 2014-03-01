@@ -17,6 +17,8 @@ bind_events = ->
         switch ch.mode
             when Mode.ADD
                 ch.add_note(pos)
+            when Mode.REMOVE
+                ch.remove_note(ch.note_at(pos))
             when Mode.MOVE
                 n = ch.note_at(pos)
                 # console.log n
@@ -33,6 +35,7 @@ bind_events = ->
 
         switch ch.mode
             when Mode.ADD then ch.add_note(pos)
+            when Mode.REMOVE then ch.remove_note(ch.note_at(pos))
             when Mode.MOVE then ch.move_selected(pos)
 
     body.on 'keydown', (e) ->
@@ -44,12 +47,14 @@ bind_events = ->
             when 65 then ch.notes[0].play()
             # Z sets mode to ADD
             when 90 then ch.set_mode('add')
-            # X sets mode to RESIZE
-            when 88 then ch.set_mode('resize')
-            # C sets mode to ADD
-            when 67 then ch.set_mode('move')
-            # V sets mode to RESIZE
-            when 86 then ch.set_mode('group')
+            # X sets mode to REMOVE
+            when 88 then ch.set_mode('remove')
+            # C sets mode to RESIZE
+            when 67 then ch.set_mode('resize')
+            # V sets mode to ADD
+            when 86 then ch.set_mode('move')
+            # B sets mode to RESIZE
+            when 66 then ch.set_mode('group')
 
             # TODO add musical typing
 
