@@ -29,16 +29,14 @@ bind_events = ->
     main.on 'mousemove', (e) ->
         pos = new Vector(e.pageX, e.pageY)
 
-        if ch.mousedown
-            switch ch.mode
-                when Mode.ADD
-                    ch.add_note(pos)
-                when Mode.MOVE
-                    if ch.selected?
-                        ch.move_selected(pos)
+        return unless ch.mousedown
+
+        switch ch.mode
+            when Mode.ADD then ch.add_note(pos)
+            when Mode.MOVE then ch.move_selected(pos)
 
     body.on 'keydown', (e) ->
-        console.log e.keyCode
+        # console.log e.keyCode
         switch e.keyCode
             # Spacebar toggles playback
             when 32 then ch.playhead.toggle()

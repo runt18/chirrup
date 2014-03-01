@@ -71,6 +71,7 @@ class App
                 note.play()
 
     move_selected: (pos) ->
+        return unless @selected?
         pos = @screen_to_grid(pos)
         @selected.shape.translation.set((pos.x + 0.5) * size.width, (pos.y + 0.5) * size.height)
 
