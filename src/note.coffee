@@ -10,6 +10,8 @@
             @freq = ch.pitches[@pitch % 12].freq
             @sine = T('sin', {freq: @freq, mul: 0.5})
 
+        end: -> @start + @duration
+
         play: ->
             T('perc', {r:500}, @sine).on('ended', -> this.pause()).bang().play()
 

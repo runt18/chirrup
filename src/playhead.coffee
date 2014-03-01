@@ -19,7 +19,7 @@
 
         next = @parent.next_note()
 
-        if next and @time >= next.start
+        if next and @time >= next.start and @time <= next.end()
             next.play()
             @parent.advance()
 
