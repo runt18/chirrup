@@ -13,6 +13,7 @@ class App
         @preview = false
         @noteIdx = 0
         @mode = Mode.ADD
+        @mousedown = false
 
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
@@ -29,6 +30,25 @@ class App
     remove_note: (note) ->
         note.remove()
         @notes.splice(@notes.indexOf(note), 1)
+
+    add_note: (pos) ->
+        o = main.offset()
+
+        screen = new Vector(
+            pos.x - o.left - border.left,
+            pos.y - o.top - border.top
+        )
+
+        start = Math.floor(screen.x / size.width)
+        pitch = grid.height - Math.floor(screen.y / size.height)
+
+        if start >= 0
+            note = new Note(pitch, start)
+            @notes.push(note)
+        else
+            if @preview
+                note = new Note(pitch, start, false)
+                note.play()
 
     clear: ->
         console.log @notes

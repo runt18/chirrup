@@ -1,33 +1,23 @@
+# for note in ch.notes
+#     if note.rect.intersects(screen)
+#         note.remove()
+#         return
+
 bind_events = ->
     two.bind('update', (frameCount) ->
         ch.playhead.progress()
     ).play()
 
     main.on 'mousedown', (e) ->
-        o = main.offset()
+        ch.mousedown = true
+        ch.add_note(new Vector(e.pageX, e.pageY))
 
-        screen = new Vector(
-            e.pageX - o.left - border.left,
-            e.pageY - o.top - border.top
-        )
+    main.on 'mouseup', (e) ->
+        ch.mousedown = false
 
-        for note in ch.notes
-            if note.rect.intersects(screen)
-                note.remove()
-                return
-
-        start = Math.floor(screen.x / size.width)
-        pitch = grid.height - Math.floor(screen.y / size.height)
-
-        if start >= 0
-            note = new Note(pitch, start)
-            ch.notes.push(note)
-        else
-            if ch.preview
-                note = new Note(pitch, start, false)
-                note.play()
-
-        console.log ch.notes
+    main.on 'mousemove', (e) ->
+        if ch.mousedown
+            ch.add_note(new Vector(e.pageX, e.pageY))
 
     body.on 'keydown', (e) ->
         switch e.keyCode
