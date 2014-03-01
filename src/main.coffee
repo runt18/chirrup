@@ -45,8 +45,9 @@ $ ->
         abs_note = note % NOTES_PER_OCTAVE
         tl.ctx.fillStyle = if abs_note in SHARPS then 'white' else 'black'
         name = ch.pitches[abs_note].name
+        name += 3 + Math.floor(note / NOTES_PER_OCTAVE)
         y = canvas.height + 5 - ((note + 1) * size.height)
-        tl.write(name, 20, y)
+        tl.write(name, 10, y)
 
     init = ->
         # Draw horizontal lines
