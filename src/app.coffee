@@ -10,7 +10,7 @@ class App
         @sharps = [1, 3, 6, 8, 10]
         @pitches = null
         @tempo = 128
-        @preview = false
+        @preview = true
         @noteIdx = 0
         @mode = Mode.ADD
         @mousedown = false
@@ -61,7 +61,6 @@ class App
         pos = @screen_to_grid(pos)
         start = pos.x
         pitch = grid.height - pos.y - 1
-        console.log pitch
 
         if start >= 0
             note = new Note(pitch, start)
