@@ -43,10 +43,15 @@ two.bind('update', (frameCount) ->
 # rect.opacity = 0.75
 # rect.noStroke()
 
-$('#main').on 'mousedown', (e) ->
-    console.log(e)
-    x = Math.floor(e.pageX / size.width) * size.width
-    y = Math.floor(e.pageY / size.height) * size.height
+main = $('#main')
+
+main.on 'mousedown', (e) ->
+    o = main.offset()
+
+    console.log o
+
+    x = Math.floor((e.pageX - o.left) / size.width) * size.width
+    y = Math.floor((e.pageY - o.top) / size.height) * size.height
     rect = two.makeRectangle(x + size.width / 2, y + size.height / 2, size.width, size.height)
     rect.fill = 'red'
     rect.noStroke()
