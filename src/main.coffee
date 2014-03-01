@@ -5,6 +5,7 @@ $ ->
     buttons =
         play: $("#play")
         reset: $("#reset")
+        preview: $('#preview')
 
     fields =
         tempo: $('#tempo')
@@ -44,6 +45,7 @@ $ ->
             @sharps = [1, 3, 6, 8, 10]
             @pitches = null
             @tempo = 128
+            @preview = false
 
             fields.tempo.val(@tempo)
 
@@ -91,8 +93,9 @@ $ ->
             note = new Note(pitch, start)
             ch.notes.push(note)
         else
-            note = new Note(pitch, start, false)
-            note.play()
+            if ch.preview
+                note = new Note(pitch, start, false)
+                note.play()
 
         console.log ch.notes
 
@@ -108,6 +111,11 @@ $ ->
 
     buttons.reset.on 'click', (e) ->
         ch.playhead.reset()
+        return false
+
+    buttons.preview.on 'click', (e) ->
+        buttons.preview.toggleClass('btn-primary')
+        ch.preview = !ch.preview
         return false
 
     fields.tempo.on 'change', (e) -> ch.tempo = parseFloat(fields.tempo.val())
