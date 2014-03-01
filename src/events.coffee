@@ -18,6 +18,8 @@ bind_events = ->
         ch.mousedown = true
         pos = new Vector(e.pageX, e.pageY)
 
+        ch.debug_click(pos)
+
         switch ch.mode
             when Mode.ADD
                 ch.add_note(pos)

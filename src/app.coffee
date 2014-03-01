@@ -15,6 +15,7 @@ class App
         @mode = Mode.ADD
         @mousedown = false
         @selected = null
+        @debug = true
 
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
@@ -31,10 +32,18 @@ class App
         note.remove()
         @notes.splice(@notes.indexOf(note), 1)
 
-    add_note: (pos) ->
+    screen_to_canvas: (pos) ->
         o = main.offset()
+        pos.subtract(o.left + border.left, o.top + border.top)
 
-        screen = pos.subtract(o.left + border.left, o.top + border.top)
+    debug_click: (pos) ->
+        pos = @screen_to_canvas(pos)
+        if @debug
+            c = two.makeCircle(pos.x, pos.y, 20)
+            c.fill = 'green'
+
+    add_note: (pos) ->
+        screen = @screen_to_canvas(pos)
 
         start = Math.floor(screen.x / size.width)
         pitch = grid.height - Math.floor(screen.y / size.height)
