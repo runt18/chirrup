@@ -54,11 +54,8 @@ module.exports = (grunt) ->
         tasks: ["jshint:gruntfile"]
 
       lib_test:
-        files: "<%= jshint.lib_test.src %>"
-        tasks: [
-          "jshint:lib_test"
-          "qunit"
-        ]
+        files: ['src/*', 'stylus/*']
+        tasks: ['default']
 
     connect:
       server:
@@ -66,6 +63,14 @@ module.exports = (grunt) ->
           port: 9000
           base: 'site'
           keepalive: true
+
+    stylus:
+      compile:
+        expand: true
+        cwd: 'stylus'
+        src: ['*.styl']
+        dest: 'css/'
+        ext: '.css'
 
     coffee:
       glob_to_multiple:
@@ -80,8 +85,10 @@ module.exports = (grunt) ->
   # grunt.loadNpmTasks('grunt-contrib-concat')
   # grunt.loadNpmTasks('grunt-contrib-uglify')
   # grunt.loadNpmTasks('grunt-contrib-qunit')
+  grunt.loadNpmTasks('grunt-contrib-stylus')
+  grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-connect')
 
   # Default task.
-  grunt.registerTask "default", ['coffee']
+  grunt.registerTask "default", ['coffee', 'stylus']
