@@ -14,6 +14,8 @@ $ ->
     # TODO: refactor this
     icon = buttons.play.find('i')
 
+    $('#controls button').tooltip()
+
     two.appendTo(main[0])
     two.scene.translation.set(border.left, border.top)
 
