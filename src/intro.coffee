@@ -3,6 +3,7 @@ OCTAVES = 2
 BEATS_PER_BAR = 4
 BARS = 4
 BEATS = BARS * BEATS_PER_BAR
+SHARPS = [1, 3, 6, 8, 10]
 
 # Number of rows and columns in the grid
 grid =

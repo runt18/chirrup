@@ -30,16 +30,23 @@ $ ->
 
     $('#controls button').tooltip()
 
+    two.appendTo(main[0])
+    two.scene.translation.set(border.left, border.top)
+
+    ch = new App()
+
     tl = new TextLayer()
     tl.appendTo(main)
     for bar in [1..BARS]
         for beat in [1..BEATS_PER_BAR]
             tl.write("#{bar}.#{beat}", ((bar - 1) * 4 + beat) * size.width, 10)
 
-    two.appendTo(main[0])
-    two.scene.translation.set(border.left, border.top)
-
-    ch = new App()
+    for note in [0...grid.height]
+        abs_note = note % NOTES_PER_OCTAVE
+        tl.ctx.fillStyle = if abs_note in SHARPS then 'white' else 'black'
+        name = ch.pitches[abs_note].name
+        y = canvas.height + 5 - ((note + 1) * size.height)
+        tl.write(name, 20, y)
 
     init = ->
         # Draw horizontal lines
@@ -56,7 +63,7 @@ $ ->
         for y in [grid.height..1] by -1
             note = (grid.height - y) % 12
             rect = two.makeRectangle(-0.5 * size.width, (y - 0.5) * size.height, size.width, size.height)
-            rect.fill = if note in ch.sharps then 'black' else 'white'
+            rect.fill = if note in SHARPS then 'black' else 'white'
 
     init()
     bind_events()

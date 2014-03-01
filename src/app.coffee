@@ -8,7 +8,6 @@ Mode =
 class App
     constructor: ->
         @notes = []
-        @sharps = [1, 3, 6, 8, 10]
         @pitches = null
         @tempo = 128
         @preview = true
@@ -28,10 +27,12 @@ class App
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
 
-        # TODO: could be a race condition here. Maybe make Async, shouldn't be
-        # too slow
-        $.getJSON 'data/pitches.json', (data) =>
-            @pitches = data
+        $.ajax
+            type: 'GET',
+            url: 'data/pitches.json',
+            dataType: 'json'
+            async: false
+            success: (data) => @pitches = data
 
         if @preview
             fields.preview.addClass('btn-primary')
