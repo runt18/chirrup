@@ -11,7 +11,7 @@
         <h1>Chirrup</h1>
         <div id="main"></div>
 
-        <div id="controls">
+        <form class="form-inline" id="controls">
             <button class="btn btn-default" id="reset">
                 <i class="glyphicon glyphicon-step-backward"></i>
             </button>
@@ -19,7 +19,11 @@
             <button class="btn btn-success" id="play">
                 <i class="glyphicon glyphicon-play"></i>
             </button>
-        </div>
+
+            <div class="form-group">
+                <input type="number" min="0" max="200" placeholder="Tempo" class="form-control" value="128.00">
+            </div>
+        </form>
     </div>
 
     <script src="vendor/jquery/dist/jquery.js"></script>

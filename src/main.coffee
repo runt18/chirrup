@@ -130,7 +130,10 @@ buttons =
 
 icon = buttons.play.find('i')
 
-buttons.play.on 'click', (e) -> playhead.toggle()
+buttons.play.on 'click', (e) ->
+    playhead.toggle()
+    return false
+
 buttons.reset.on 'click', (e) -> playhead.reset()
 
 two.update()
