@@ -4,11 +4,15 @@ params =
   width: 800
   height: 600
 
+grid =
+    width: 16
+    height: 24
+
 two = new Two(params).appendTo(elem)
 
 size =
-    width: 100
-    height: 50
+    width: params.width / grid.width
+    height: params.height / grid.height
 
 # two has convenience methods to create shapes.
 # circle = two.makeCircle(72, 100, 50)
@@ -22,11 +26,13 @@ for y in [0..params.width] by size.width
 
 playhead = two.makeLine(100, 0, 100, params.height)
 playhead.stroke = 'red'
-
 playing = false
+play_speed = 2
 
 two.bind('update', (frameCount) ->
-    playhead.translation.x += 1 if playing
+    if playhead.translation.x is params.width
+        playhead.translation.x = 0
+    playhead.translation.x += play_speed if playing
 ).play()
 
 # The object returned has many stylable properties:
@@ -45,8 +51,19 @@ $('#main').on 'mousedown', (e) ->
     rect.fill = 'red'
     rect.noStroke()
 
-$('#play').on 'click', (e) ->
+buttons =
+    play: $("#play")
+    reset: $("#reset")
+
+icon = buttons.play.find('i')
+
+buttons.play.on 'click', (e) ->
     playing = !playing
+    icon.toggleClass('glyphicon-play')
+    icon.toggleClass('glyphicon-pause')
+
+buttons.reset.on 'click', (e) ->
+    playhead.translation.x = 0
 
 # Don't forget to tell two to render everything
 # to the screen
