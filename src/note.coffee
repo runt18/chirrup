@@ -31,6 +31,12 @@
             @pitch = x
             @update_freq()
 
+        set_duration: (x) ->
+            console.log x
+            @rect.width = x
+            @shape.width = x
+            @duration = x
+
         end: -> @start + @duration
 
         play: ->

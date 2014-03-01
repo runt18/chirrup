@@ -83,6 +83,11 @@ class App
         @selected.set_start(pos.x)
         @selected.set_pitch(pos.y)
 
+    resize_selected: (pos) ->
+        return unless @selected?
+        pos = @screen_to_grid(pos)
+        @selected.set_duration(pos.x)
+
     clear: ->
         console.log @notes
         for note in @notes

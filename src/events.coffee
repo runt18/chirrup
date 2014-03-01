@@ -19,7 +19,7 @@ bind_events = ->
                 ch.add_note(pos)
             when Mode.REMOVE
                 ch.remove_note(ch.note_at(pos))
-            when Mode.MOVE
+            when Mode.MOVE, Mode.RESIZE
                 n = ch.note_at(pos)
                 # console.log n
                 ch.selected = n if n?
@@ -36,6 +36,7 @@ bind_events = ->
         switch ch.mode
             when Mode.ADD then ch.add_note(pos)
             when Mode.REMOVE then ch.remove_note(ch.note_at(pos))
+            when Mode.RESIZE then ch.resize_selected(pos)
             when Mode.MOVE then ch.move_selected(pos)
 
     body.on 'keydown', (e) ->
