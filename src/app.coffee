@@ -47,10 +47,10 @@ class App
 
     screen_to_canvas: (pos) ->
         o = main.offset()
-        pos.subtract(o.left + border.left, o.top + border.top)
+        new Two.Vector().sub(pos, new Two.Vector(o.left + border.left, o.top + border.top))
 
     canvas_to_grid: (pos) ->
-        new Vector(
+        new Two.Vector(
             Math.floor(pos.x / size.width),
             Math.floor(pos.y / size.height)
         )
@@ -69,10 +69,12 @@ class App
         start = pos.x
         pitch = grid.height - pos.y - 1
 
-        if start >= 0
+        if pos.x >= 0 and pos.y >= 0
             note = new Note(pitch, start)
             @notes.push(note)
-        else
+        else if pos.x >= 0 and pos.y < 0
+            console.log('top')
+        else if pos.x < 0 and pos.y >= 0
             if @preview
                 note = new Note(pitch, start, false)
                 note.play()

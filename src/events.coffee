@@ -10,7 +10,7 @@ bind_events = ->
 
     main.on 'mousedown', (e) ->
         ch.mousedown = true
-        pos = new Vector(e.pageX, e.pageY)
+        pos = new Two.Vector(e.pageX, e.pageY)
 
         ch.debug_click(pos)
 
@@ -29,7 +29,7 @@ bind_events = ->
         ch.selected = null
 
     main.on 'mousemove', (e) ->
-        pos = new Vector(e.pageX, e.pageY)
+        pos = new Two.Vector(e.pageX, e.pageY)
 
         return unless ch.mousedown
 

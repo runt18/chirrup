@@ -1,9 +1,18 @@
- class Playhead
+makeTriangle = (x, y, w, h) ->
+    hw = w / 2
+    two.makePolygon(x - hw, -h, x + hw, -h, x, y)
+
+class Playhead
     constructor: (@parent, tempo) ->
         @playing = false
+        @colour = '#4CAE4C'
         @time = 0
-        @shape = two.makeLine(@time, 0, @time, piano_roll.height)
-        @shape.stroke = 'red'
+        line = two.makeLine(@time, 0, @time, piano_roll.height)
+        tri = makeTriangle(@time, 0, 10, 10)
+        @shape = two.makeGroup(line, tri)
+        @shape.stroke = @colour
+        @shape.fill = @colour
+        @shape.linewidth = 3
         @set_speed(tempo)
 
     set_speed: (tempo) ->
