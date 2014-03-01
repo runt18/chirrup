@@ -34,7 +34,7 @@ class App
     add_note: (pos) ->
         o = main.offset()
 
-        screen = pos.subtract(o.left + border.left, o.top - border.top)
+        screen = pos.subtract(o.left + border.left, o.top + border.top)
 
         start = Math.floor(screen.x / size.width)
         pitch = grid.height - Math.floor(screen.y / size.height)
