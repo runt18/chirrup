@@ -67,13 +67,21 @@ module.exports = (grunt) ->
           base: 'site'
           keepalive: true
 
+    coffee:
+      glob_to_multiple:
+        expand: true
+        flatten: true
+        cwd: 'src'
+        src: ['*.coffee']
+        dest: 'js'
+        ext: '.js'
 
   # These plugins provide necessary tasks.
   # grunt.loadNpmTasks('grunt-contrib-concat')
   # grunt.loadNpmTasks('grunt-contrib-uglify')
   # grunt.loadNpmTasks('grunt-contrib-qunit')
-  # grunt.loadNpmTasks('grunt-contrib-jshint')
-  grunt.loadNpmTasks('grunt-connect');
+  grunt.loadNpmTasks('grunt-contrib-coffee')
+  grunt.loadNpmTasks('grunt-connect')
 
   # Default task.
-  grunt.registerTask "default", ['']
+  grunt.registerTask "default", ['coffee']
