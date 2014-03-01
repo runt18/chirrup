@@ -1,5 +1,5 @@
  class Playhead
-    constructor: (two, @icon) ->
+    constructor: (@parent, two, @icon) ->
         @playing = false
         @time = 0
         @speed = 0.02
@@ -12,12 +12,20 @@
         @icon.toggleClass('glyphicon-pause')
 
     progress: ->
+        return unless @playing
+
         if @time >= grid.width
             @time = 0
 
+        next = @parent.next_note()
+
+        if next and @time >= next.start
+            next.play()
+            @parent.advance()
+
         @shape.translation.x = @time * size.width
 
-        @time += @speed if @playing
+        @time += @speed
 
     reset: ->
         @time = 0

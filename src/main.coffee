@@ -13,21 +13,22 @@ $ ->
     icon = buttons.play.find('i')
 
     class Note
-        constructor: (@pitch=0, @start=0, render=true, @duration=1, @velocity=100) ->
-            if render
+        constructor: (@pitch=0, @start=0, @render=true, @duration=1, @velocity=100) ->
+            if @render
                 @rect = new Rect((@start + 0.5) * size.width, (@pitch + 0.5) * size.height)
                 @shape = two.makeRectangle(@rect.x, @rect.y, @rect.width, @rect.height)
                 @shape.fill = 'red'
                 @shape.noStroke()
+                @played = false
+
+            @freq = ch.pitches[@pitch % 12].freq
+            @sine = T('sin', {freq: @freq, mul: 0.5})
 
         play: ->
-            freq = ch.pitches[@pitch % 12].freq
-            sine = T('sin', {freq:freq, mul:0.5})
-            T('perc', {r:500}, sine).on('ended', -> this.pause()).bang().play()
+            T('perc', {r:500}, @sine).on('ended', -> this.pause()).bang().play()
 
         remove: ->
-            two.remove(@shape)
-            notes.splice(notes.indexOf(this), 1)
+            two.remove(@shape) if @render
 
     class Vector
         constructor: (@x, @y) ->
@@ -41,16 +42,36 @@ $ ->
     class App
         constructor: ->
             @notes = []
-            @playhead = new Playhead(two, icon)
+            @playhead = new Playhead(this, two, icon)
             @sharps = [1, 3, 6, 8, 10]
             @pitches = null
             @tempo = 128
             @preview = false
 
+            @noteIdx = 0
+
             fields.tempo.val(@tempo)
 
             $.getJSON 'data/pitches.json', (data) =>
                 @pitches = data
+
+        remove_note: (note) ->
+            note.remove()
+            @notes.splice(notes.indexOf(note), 1)
+
+        play: ->
+            @playhead.toggle()
+            @notes = _.sortBy(@notes, (note) -> note.start)
+
+        next_note: ->
+            if @notes.length is 0 then null else @notes[@noteIdx]
+
+        advance: ->
+            @noteIdx++
+            @reset() if @noteIdx >= @notes.length
+
+        reset: ->
+            @noteIdx = 0
 
     two = new Two(params).appendTo(main[0])
     two.scene.translation.set(border.left, border.top)
@@ -106,10 +127,11 @@ $ ->
             when 65 then ch.notes[0].play()
 
     buttons.play.on 'click', (e) ->
-        ch.playhead.toggle()
+        ch.play()
         return false
 
     buttons.reset.on 'click', (e) ->
+        ch.reset()
         ch.playhead.reset()
         return false
 
