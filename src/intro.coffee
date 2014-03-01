@@ -1,7 +1,13 @@
+NOTES_PER_OCTAVE = 12
+OCTAVES = 2
+BEATS_PER_BAR = 4
+BARS = 4
+BEATS = BARS * BEATS_PER_BAR
+
 # Number of rows and columns in the grid
 grid =
-    width: 16
-    height: 12
+    width: BEATS
+    height: OCTAVES * NOTES_PER_OCTAVE
 
 # Border width in pixels around the main note view
 border =

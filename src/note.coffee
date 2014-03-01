@@ -14,7 +14,11 @@
                 @shape.noStroke()
                 @played = false
 
-            @freq = ch.pitches[@pitch % 12].freq
+            console.log @pitch
+
+            @freq = ch.pitches[@pitch % NOTES_PER_OCTAVE].freq
+            if @pitch >= NOTES_PER_OCTAVE
+                @freq *= Math.floor(@pitch / NOTES_PER_OCTAVE)
             @sine = T('sin', {freq: @freq, mul: 0.5})
 
         end: -> @start + @duration

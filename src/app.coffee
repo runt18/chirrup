@@ -60,7 +60,8 @@ class App
     add_note: (pos) ->
         pos = @screen_to_grid(pos)
         start = pos.x
-        pitch = grid.height - pos.y
+        pitch = grid.height - pos.y - 1
+        console.log pitch
 
         if start >= 0
             note = new Note(pitch, start)
