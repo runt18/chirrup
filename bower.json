@@ -1,0 +1,17 @@
+{
+  "name": "chirrup",
+  "version": "0.0.1",
+  "authors": [
+    "Giles Lavelle <giles.lavelle@gmail.com>"
+  ],
+  "description": "Online collaborative MIDI sequencer",
+  "main": "index.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
