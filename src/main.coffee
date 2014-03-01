@@ -12,37 +12,10 @@ $ ->
 
     icon = buttons.play.find('i')
 
-    class Note
-        constructor: (@pitch=0, @start=0, @render=true, @duration=1, @velocity=100) ->
-            if @render
-                @rect = new Rect((@start + 0.5) * size.width, (@pitch + 0.5) * size.height)
-                @shape = two.makeRectangle(@rect.x, @rect.y, @rect.width, @rect.height)
-                @shape.fill = 'red'
-                @shape.noStroke()
-                @played = false
-
-            @freq = ch.pitches[@pitch % 12].freq
-            @sine = T('sin', {freq: @freq, mul: 0.5})
-
-        play: ->
-            T('perc', {r:500}, @sine).on('ended', -> this.pause()).bang().play()
-
-        remove: ->
-            two.remove(@shape) if @render
-
-    class Vector
-        constructor: (@x, @y) ->
-
-    class Rect
-        constructor: (@x, @y, @width=size.width, @height=size.height) ->
-
-        intersects: (v) ->
-            (@x < v.x < @x + @width) and (@y < v.y < @y + @height)
-
     class App
         constructor: ->
             @notes = []
-            @playhead = new Playhead(this, two, icon)
+            @playhead = new Playhead(this, icon)
             @sharps = [1, 3, 6, 8, 10]
             @pitches = null
             @tempo = 128
@@ -73,7 +46,7 @@ $ ->
         reset: ->
             @noteIdx = 0
 
-    two = new Two(params).appendTo(main[0])
+    two.appendTo(main[0])
     two.scene.translation.set(border.left, border.top)
 
     ch = new App()

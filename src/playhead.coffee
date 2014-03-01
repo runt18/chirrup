@@ -1,5 +1,5 @@
  class Playhead
-    constructor: (@parent, two, @icon) ->
+    constructor: (@parent, @icon) ->
         @playing = false
         @time = 0
         @speed = 0.02

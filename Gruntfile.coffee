@@ -77,7 +77,13 @@ module.exports = (grunt) ->
         options:
           join: true
         files:
-          'js/main.js': ['src/intro.coffee', 'src/playhead.coffee', 'src/main.coffee']
+          'js/main.js': [
+            'src/intro.coffee'
+            'src/geom.coffee'
+            'src/note.coffee'
+            'src/playhead.coffee'
+            'src/main.coffee'
+          ]
 
   grunt.loadNpmTasks('grunt-contrib-stylus')
   grunt.loadNpmTasks('grunt-contrib-watch')

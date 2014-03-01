@@ -15,3 +15,6 @@ params =
 size =
     width: params.width / grid.width
     height: params.height / grid.height
+
+two = new Two(params)
+ch = null
