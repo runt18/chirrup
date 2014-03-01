@@ -1,6 +1,6 @@
 grid =
     width: 16
-    height: 24
+    height: 12
 
 border =
     left: 50
