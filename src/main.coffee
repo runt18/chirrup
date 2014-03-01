@@ -1,16 +1,19 @@
 $ ->
+    # Grab main page elements
     main = $('#main')
     body = $('body')
 
-    buttons =
-        play: $("#play")
-        reset: $("#reset")
-        preview: $('#preview')
-        clear: $('#clear')
+    # Grab buttons
+    buttons = {}
+    bids = ['play', 'reset', 'preview', 'clear', 'metronome', 'quantize', 'undo', 'redo', 'open', 'save']
+    buttons[bid] = $('#' + bid) for bid in bids
 
-    fields =
-        tempo: $('#tempo')
+    # Grab fields
+    fields = {}
+    fids = ['tempo']
+    fields[fid] = $('#' + fid) for fid in fids
 
+    # TODO: refactor this
     icon = buttons.play.find('i')
 
     class App
