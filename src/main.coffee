@@ -33,7 +33,7 @@ $ ->
         # Draw piano
         for y in [grid.height..0] by -1
             note = (grid.height - y) % 12
-            rect = two.makeRectangle(-size.width / 2, y * size.height - size.height / 2, size.width, size.height)
+            rect = two.makeRectangle(-0.5 * size.width, (y - 0.5) * size.height, size.width, size.height)
             rect.fill = if note in ch.sharps then 'black' else 'white'
 
     init()
