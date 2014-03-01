@@ -17,6 +17,12 @@ class App
         @selected = null
         @debug = false
 
+        @cursor_map =
+            add: 'pointer'
+            move: 'move'
+            resize: 'ew-resize'
+            group: 'crosshair'
+
         @playhead = new Playhead(this, @tempo, icon)
         fields.tempo.val(@tempo)
 
@@ -91,6 +97,8 @@ class App
 
     set_mode: (str) ->
         @mode = Mode[str.toUpperCase()]
+        fields.mode.val(str)
+        main.css('cursor', @cursor_map[str])
 
     note_at: (v) ->
         v = @screen_to_canvas(v)

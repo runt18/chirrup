@@ -3,12 +3,6 @@
 #         note.remove()
 #         return
 
-cursor_map =
-    add: 'pointer'
-    move: 'move'
-    resize: 'ew-resize'
-    group: 'crosshair'
-
 bind_events = ->
     two.bind('update', (frameCount) ->
         ch.playhead.progress()
@@ -44,11 +38,21 @@ bind_events = ->
                         ch.move_selected(pos)
 
     body.on 'keydown', (e) ->
+        console.log e.keyCode
         switch e.keyCode
             # Spacebar toggles playback
             when 32 then ch.playhead.toggle()
             # A plays a note
             when 65 then ch.notes[0].play()
+            # Z sets mode to ADD
+            when 90 then ch.set_mode('add')
+            # X sets mode to RESIZE
+            when 88 then ch.set_mode('resize')
+            # C sets mode to ADD
+            when 67 then ch.set_mode('move')
+            # V sets mode to RESIZE
+            when 86 then ch.set_mode('group')
+
             # TODO add musical typing
 
     buttons.play.on 'click', (e) ->
@@ -69,8 +73,6 @@ bind_events = ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
 
     fields.mode.on 'change', (e) ->
-        mode = fields.mode.val()
-        main.css('cursor', cursor_map[mode])
-        ch.set_mode(mode)
+        ch.set_mode(fields.mode.val())
 
     fields.mode.trigger('change')
