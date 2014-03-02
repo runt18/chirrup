@@ -34,7 +34,8 @@
         set_duration: (x) ->
             console.log x
             @rect.width = x
-            @shape.width = x
+            @shape.vertices[0].x = (x - @start - 0.5) * size.width - @border / 2
+            @shape.vertices[3].x = (x - @start - 0.5) * size.width - @border / 2
             @duration = x
 
         end: -> @start + @duration

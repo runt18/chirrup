@@ -1,8 +1,3 @@
-# for note in ch.notes
-#     if note.rect.intersects(screen)
-#         note.remove()
-#         return
-
 bind_events = ->
     two.bind('update', (frameCount) ->
         ch.playhead.progress()
@@ -21,7 +16,6 @@ bind_events = ->
                 ch.remove_note(ch.note_at(pos))
             when Mode.MOVE, Mode.RESIZE
                 n = ch.note_at(pos)
-                # console.log n
                 ch.selected = n if n?
 
     main.on 'mouseup', (e) ->
