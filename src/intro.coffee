@@ -32,7 +32,11 @@ size =
     width: piano_roll.width / grid.width
     height: piano_roll.height / grid.height
 
-two = new Two(canvas)
+two = new Two
+    height: canvas.height
+    width: canvas.width
+    type: Two.Types.webgl
+
 ch = null
 audiolet = null
 audio = null
