@@ -43,3 +43,12 @@ class Note
 
     remove: ->
         two.remove(@shape) if @render
+
+    export: ->
+        props = ['duration', 'frequency', 'pitch', 'start', 'velocity']
+        o = {}
+        for prop in props
+            o[prop] = this[prop]
+
+        return o
+

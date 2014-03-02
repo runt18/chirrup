@@ -67,6 +67,24 @@ bind_events = ->
     buttons.clear.on 'click', (e) ->
         ch.clear()
 
+    buttons.save.on 'click', (e) ->
+        data =
+            notes: (n.export() for n in ch.notes)
+
+        filename = 'levels'
+
+        localStorage["ch-#{filename}"] = JSON.stringify(data)
+
+    buttons.open.on 'click', (e) ->
+        filename = 'levels'
+
+        s = localStorage["ch-#{filename}"]
+
+        if s
+            console.log JSON.parse(s)
+        else
+            alert("#{filename} doesn't exist")
+
     fields.tempo.on 'change', (e) ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
 
