@@ -13,8 +13,8 @@ build: favicon
 	    img/bird.png \
 	    vendor/jquery/dist/jquery.js \
 	    vendor/bootstrap/dist/js/bootstrap.js \
+	    vendor/Audiolet/src/audiolet/Audiolet.js \
 	    vendor/two/build/two.js \
-	    vendor/timbre/timbre.dev.js \
 	    site
 
 deploy: build
