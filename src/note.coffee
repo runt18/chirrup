@@ -17,8 +17,7 @@
                 @update_freq()
 
         update_freq: ->
-            # @freq = ch.pitches[@pitch % NOTES_PER_OCTAVE].freq * (Math.floor(@pitch / NOTES_PER_OCTAVE) + 1)
-            # @sine = T('sin', {freq: @freq, mul: 0.5})
+            @freq = ch.pitches[@pitch % NOTES_PER_OCTAVE].freq * (Math.floor(@pitch / NOTES_PER_OCTAVE) + 1)
 
         set_start: (x) ->
             @rect.x = x * size.width
@@ -38,9 +37,6 @@
             @duration = x
 
         end: -> @start + @duration
-
-        play: ->
-            # T('perc', {r:500}, @sine).on('ended', -> this.pause()).bang().play()
 
         remove: ->
             two.remove(@shape) if @render

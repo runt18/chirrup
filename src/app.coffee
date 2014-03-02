@@ -99,7 +99,14 @@ class App
 
     play: ->
         @playhead.toggle()
-        @notes = _.sortBy(@notes, (note) -> note.start)
+        freqs = _.sortBy(@notes, (n) -> n.start).map((n) -> n.freq)
+        iterations = 1
+        frequencyPattern = new PSequence(freqs, iterations)
+
+        audiolet.scheduler.play([frequencyPattern], 1, ((freq) ->
+            synth = new Synth(audiolet, freq)
+            synth.connect(audiolet.output)
+        ).bind(this))
 
     next_note: ->
         if @notes.length is 0 then null else @notes[@noteIdx]

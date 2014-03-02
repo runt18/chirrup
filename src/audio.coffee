@@ -8,7 +8,7 @@ class Synth extends AudioletGroup
 
         @gain = new Gain(@audiolet)
         cb = -> @audiolet.scheduler.addRelative(0, @remove.bind(this))
-        @envelope = new PercussiveEnvelope(@audiolet, 1, 1, 1, cb.bind(this))
+        @envelope = new Envelope(@audiolet, 1, [1, 1, 0], [0.5, 0.1], 3, cb.bind(this))
 
         @modulator.connect(@mulAdd)
         @mulAdd.connect(@sine)

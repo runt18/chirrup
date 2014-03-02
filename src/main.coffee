@@ -34,12 +34,7 @@ $ ->
     two.scene.translation.set(border.left, border.top)
 
     ch = new App()
-
     audiolet = new Audiolet()
-
-    audiolet.scheduler.addAbsolute 4, ->
-        synth = new Synth(audiolet, 440)
-        synth.connect(audiolet.output)
 
     tl = new TextLayer()
     tl.appendTo(main)

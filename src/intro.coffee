@@ -33,5 +33,6 @@ size =
 
 two = new Two(canvas)
 ch = null
+audiolet = null
 main = body = icon = null
 buttons = fields = {}

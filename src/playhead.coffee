@@ -37,11 +37,11 @@ class Playhead
         if @time >= grid.width
             @time = 0
 
-        next = @parent.next_note()
+        # next = @parent.next_note()
 
-        if next and @time >= next.start and @time <= next.end()
-            next.play()
-            @parent.advance()
+        # if next and @time >= next.start and @time <= next.end()
+        #     next.play()
+        #     @parent.advance()
 
         @update_shape()
 
