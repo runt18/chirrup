@@ -77,7 +77,7 @@ class App
         else if pos.x < 0 and pos.y >= 0
             if @preview
                 note = new Note(pitch, start, false)
-                note.play()
+                play_note(note.freq)
 
     move_selected: (pos) ->
         return unless @selected?
@@ -99,11 +99,12 @@ class App
 
     play: ->
         @playhead.toggle()
-        freqs = _.sortBy(@notes, (n) -> n.start).map((n) -> n.freq)
+        ns = _.sortBy(@notes, (n) -> n.start)
         iterations = 1
-        frequencyPattern = new PSequence(freqs, iterations)
+        frequencies = new PSequence((n.freq for n in ns), iterations)
+        durations = new PSequence((n.duration for n in ns))
 
-        audiolet.scheduler.play([frequencyPattern], 1, ((freq) ->
+        audiolet.scheduler.play([frequencies], durations, ((freq) ->
             synth = new Synth(audiolet, freq)
             synth.connect(audiolet.output)
         ).bind(this))

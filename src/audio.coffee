@@ -15,3 +15,10 @@ class Synth extends AudioletGroup
         @envelope.connect(@gain, 0, 1)
         @sine.connect(@gain)
         @gain.connect(@outputs[0])
+
+play_note = (freq) ->
+    fs = new PSequence([freq], 1)
+    audiolet.scheduler.play([fs], 1, ((f) ->
+        synth = new Synth(audiolet, f)
+        synth.connect(audiolet.output)
+    ).bind(this))
