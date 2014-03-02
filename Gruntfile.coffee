@@ -1,4 +1,4 @@
-names = ['intro', 'app', 'events', 'geom', 'note', 'playhead', 'main']
+names = ['intro', 'app', 'events', 'audio', 'geom', 'note', 'playhead', 'main']
 paths = ("src/#{name}.coffee" for name in names)
 
 contribs = ['stylus', 'watch', 'coffee']

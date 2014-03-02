@@ -1,0 +1,17 @@
+class Synth extends AudioletGroup
+    constructor: (audiolet, freq) ->
+        AudioletGroup.apply(this, [audiolet, 0, 1])
+
+        @sine = new Sine(@audiolet, freq)
+        @modulator = new Saw(@audiolet, freq * 2)
+        @mulAdd = new MulAdd(@audiolet, freq / 2, freq)
+
+        @gain = new Gain(@audiolet)
+        cb = -> @audiolet.scheduler.addRelative(0, @remove.bind(this))
+        @envelope = new PercussiveEnvelope(@audiolet, 1, 1, 1, cb.bind(this))
+
+        @modulator.connect(@mulAdd)
+        @mulAdd.connect(@sine)
+        @envelope.connect(@gain, 0, 1)
+        @sine.connect(@gain)
+        @gain.connect(@outputs[0])

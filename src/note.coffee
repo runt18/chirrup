@@ -17,8 +17,8 @@
                 @update_freq()
 
         update_freq: ->
-            @freq = ch.pitches[@pitch % NOTES_PER_OCTAVE].freq * (Math.floor(@pitch / NOTES_PER_OCTAVE) + 1)
-            @sine = T('sin', {freq: @freq, mul: 0.5})
+            # @freq = ch.pitches[@pitch % NOTES_PER_OCTAVE].freq * (Math.floor(@pitch / NOTES_PER_OCTAVE) + 1)
+            # @sine = T('sin', {freq: @freq, mul: 0.5})
 
         set_start: (x) ->
             @rect.x = x * size.width
@@ -32,16 +32,15 @@
             @update_freq()
 
         set_duration: (x) ->
-            console.log x
             @rect.width = x
-            @shape.vertices[0].x = (x - @start - 0.5) * size.width - @border / 2
-            @shape.vertices[3].x = (x - @start - 0.5) * size.width - @border / 2
+            left = (x - @start - 0.5) * size.width - @border / 2
+            @shape.vertices[0].x = @shape.vertices[3].x = left
             @duration = x
 
         end: -> @start + @duration
 
         play: ->
-            T('perc', {r:500}, @sine).on('ended', -> this.pause()).bang().play()
+            # T('perc', {r:500}, @sine).on('ended', -> this.pause()).bang().play()
 
         remove: ->
             two.remove(@shape) if @render
