@@ -38,3 +38,17 @@ audiolet = null
 audio = null
 main = body = icon = null
 buttons = fields = {}
+
+window.alert = (m) ->
+    style =
+        position: 'fixed'
+        top: 10
+        padding: 10
+        zIndex: 2000
+        borderRadius: 5
+        fontWeight: 'bold'
+
+    el = $('<div>')
+    el.text(m).css(style).addClass('alert-danger').hide().appendTo('body')
+    el.css('left', ($('body').width() - el.width()) / 2)
+    el.fadeIn().delay(5000).fadeOut -> $(this).remove()

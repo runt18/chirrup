@@ -64,19 +64,20 @@ class App
             c = two.makeCircle(pos.x, pos.y, 20)
             c.fill = 'green'
 
-    add_note: (pos) ->
+    add_note_screen: (pos) ->
         pos = @screen_to_grid(pos)
-        start = pos.x
-        pitch = grid.height - pos.y - 1
+        pos.y = grid.height - pos.y - 1
+        @add_note(pos)
 
+    add_note: (pos) ->
         if pos.x >= 0 and pos.y >= 0
-            note = new Note(pitch, start)
+            note = new Note(pos.y, pos.x)
             @notes.push(note)
         else if pos.x >= 0 and pos.y < 0
             @playhead.set_time(pos.x)
         else if pos.x < 0 and pos.y >= 0
             if @preview
-                audio.play_note(Note.pitch_to_freq(grid.height - pos.y))
+                audio.play_note(Note.pitch_to_freq(pos.y))
 
     move_selected: (pos) ->
         return unless @selected?

@@ -8,7 +8,7 @@ $ ->
     buttons[bid] = $('#' + bid) for bid in bids
 
     # Grab fields
-    fids = ['tempo', 'mode']
+    fids = ['tempo', 'mode', 'filename']
     fields[fid] = $('#' + fid) for fid in fids
 
     $('#controls button').tooltip()

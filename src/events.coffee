@@ -11,7 +11,7 @@ bind_events = ->
 
         switch ch.mode
             when Mode.ADD
-                ch.add_note(pos)
+                ch.add_note_screen(pos)
             when Mode.REMOVE
                 ch.remove_note(ch.note_at(pos))
             when Mode.MOVE, Mode.RESIZE
@@ -28,7 +28,7 @@ bind_events = ->
         return unless ch.mousedown
 
         switch ch.mode
-            when Mode.ADD then ch.add_note(pos)
+            when Mode.ADD then ch.add_note_screen(pos)
             when Mode.REMOVE then ch.remove_note(ch.note_at(pos))
             when Mode.RESIZE then ch.resize_selected(pos)
             when Mode.MOVE then ch.move_selected(pos)
@@ -68,22 +68,32 @@ bind_events = ->
         ch.clear()
 
     buttons.save.on 'click', (e) ->
+        filename = fields.filename.val()
+
+        unless filename
+            alert 'Please name this project'
+            return
+
         data =
             notes: (n.export() for n in ch.notes)
-
-        filename = 'levels'
 
         localStorage["ch-#{filename}"] = JSON.stringify(data)
 
     buttons.open.on 'click', (e) ->
-        filename = 'levels'
+        filename = fields.filename.val()
+
+        unless filename
+            alert 'Choose a project to open'
+            return
 
         s = localStorage["ch-#{filename}"]
 
         if s
-            console.log JSON.parse(s)
+            data = JSON.parse(s)
+            for note in data.notes
+                ch.add_note(new Two.Vector(note.time, note.pitch))
         else
-            alert("#{filename} doesn't exist")
+            alert "#{filename} doesn't exist"
 
     fields.tempo.on 'change', (e) ->
         ch.set_tempo(parseFloat(fields.tempo.val()))
