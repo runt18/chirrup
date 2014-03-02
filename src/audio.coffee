@@ -1,5 +1,5 @@
 class Synth extends AudioletGroup
-    constructor: (audiolet, freq) ->
+    constructor: (audiolet, freq, dur) ->
         AudioletGroup.apply(this, [audiolet, 0, 1])
 
         @sine = new Sine(@audiolet, freq)
@@ -8,7 +8,7 @@ class Synth extends AudioletGroup
 
         @gain = new Gain(@audiolet)
         cb = -> @audiolet.scheduler.addRelative(0, @remove.bind(this))
-        @envelope = new Envelope(@audiolet, 1, [1, 1, 0], [0.5, 0.1], 3, cb.bind(this))
+        @envelope = new Envelope(@audiolet, 1, [1, 1, 0], [dur, 0.01], 3, cb.bind(this))
 
         @modulator.connect(@mulAdd)
         @mulAdd.connect(@sine)
@@ -17,8 +17,7 @@ class Synth extends AudioletGroup
         @gain.connect(@outputs[0])
 
 play_note = (freq) ->
-    fs = new PSequence([freq], 1)
-    audiolet.scheduler.play([fs], 1, ((f) ->
-        synth = new Synth(audiolet, f)
+    audiolet.scheduler.addAbsolute(0, (->
+        synth = new Synth(audiolet, freq)
         synth.connect(audiolet.output)
     ).bind(this))

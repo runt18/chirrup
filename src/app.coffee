@@ -99,13 +99,17 @@ class App
 
     play: ->
         @playhead.toggle()
-        ns = _.sortBy(@notes, (n) -> n.start)
         iterations = 1
-        frequencies = new PSequence((n.freq for n in ns), iterations)
-        durations = new PSequence((n.duration for n in ns))
+        freqs = (0 for x in [1..grid.width])
+        for note in @notes
+            freqs[note.start] = note.freq
+        frequencies = new PSequence(freqs, iterations)
+        duration = @tempo / (60 * 4)
 
-        audiolet.scheduler.play([frequencies], durations, ((freq) ->
-            synth = new Synth(audiolet, freq)
+        console.log freqs
+
+        audiolet.scheduler.play([frequencies], duration, ((freq) ->
+            synth = new Synth(audiolet, freq, duration / 2)
             synth.connect(audiolet.output)
         ).bind(this))
 
