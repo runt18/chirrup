@@ -102,7 +102,7 @@ class App
         freqs = (0 for x in [1..grid.width])
         for note in @notes
             freqs[note.start] = note.freq
-        frequencies = new PSequence(freqs, iterations)
+        frequencies = new PSequence(freqs, iterations, Math.ceil(@playhead.time))
         duration = @tempo / (60 * 4)
 
         audiolet.scheduler.play([frequencies], duration, ((freq) ->
