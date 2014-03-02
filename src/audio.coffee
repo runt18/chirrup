@@ -16,8 +16,12 @@ class Synth extends AudioletGroup
         @sine.connect(@gain)
         @gain.connect(@outputs[0])
 
-play_note = (freq) ->
-    audiolet.scheduler.addAbsolute(0, (->
-        synth = new Synth(audiolet, freq)
-        synth.connect(audiolet.output)
-    ).bind(this))
+class Audio
+    play_note: (freq) ->
+        console.log "Playing #{freq}"
+        sine = new Sine(audiolet, freq)
+        envelope = new Envelope(audiolet, 1, [1, 1, 0], [0.2, 0.01], 3)
+        gain = new Gain(audiolet)
+        envelope.connect(gain, 0, 1)
+        sine.connect(gain)
+        gain.connect(audiolet.output)

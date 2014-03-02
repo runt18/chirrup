@@ -35,6 +35,7 @@ $ ->
 
     ch = new App()
     audiolet = new Audiolet()
+    audio = new Audio()
 
     tl = new TextLayer()
     tl.appendTo(main)

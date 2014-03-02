@@ -39,7 +39,7 @@ bind_events = ->
             # Spacebar toggles playback
             when 32 then ch.playhead.toggle()
             # A plays a note
-            when 65 then play_note(200)
+            when 65 then audio.play_note(200)
             # Z sets mode to ADD
             when 90 then ch.set_mode('add')
             # X sets mode to REMOVE

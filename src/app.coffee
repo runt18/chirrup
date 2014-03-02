@@ -76,8 +76,7 @@ class App
             @playhead.set_time(pos.x)
         else if pos.x < 0 and pos.y >= 0
             if @preview
-                note = new Note(pitch, start, false)
-                play_note(note.freq)
+                audio.play_note(Note.pitch_to_freq(grid.height - pos.y))
 
     move_selected: (pos) ->
         return unless @selected?
@@ -105,8 +104,6 @@ class App
             freqs[note.start] = note.freq
         frequencies = new PSequence(freqs, iterations)
         duration = @tempo / (60 * 4)
-
-        console.log freqs
 
         audiolet.scheduler.play([frequencies], duration, ((freq) ->
             synth = new Synth(audiolet, freq, duration / 2)
